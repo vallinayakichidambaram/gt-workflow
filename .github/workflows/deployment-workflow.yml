@@ -1,3 +1,4 @@
+# This workflow has a single job with multiple steps - steps run one after the other
 name: deployment exercise 1
 on: push
 jobs:
