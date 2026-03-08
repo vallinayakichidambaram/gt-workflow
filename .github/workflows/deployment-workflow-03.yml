@@ -1,0 +1,43 @@
+# This workflow has multiple jobs - by default jobs run in parallel - if you want to run one after the other, use "needs"
+name: deployment exercise 3
+on: push
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+       - name: Get Code
+         uses: actions/checkout@v3
+       - name: Install dependencies
+         run: npm ci
+       - name: Lint
+         run: npm run lint
+  test:
+    needs: lint
+    runs-on: ubuntu-latest
+    steps:
+       - name: Get Code
+         uses: actions/checkout@v3
+       - name: Install dependencies
+         run: npm ci
+       - name: Test Code
+         run: npm run test
+  build:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+       - name: Get Code
+         uses: actions/checkout@v3
+       - name: Install dependencies
+         run: npm ci
+       - name: Build
+         run: npm run build
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+       - name: Get Code
+         uses: actions/checkout@v3
+       - name: Install dependencies
+         run: npm ci
+       - name: Deploy Code
+         run: echo "Deploying exercise 2...."
